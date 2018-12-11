@@ -1,3 +1,9 @@
+#' speclusteR: conjunto para teste
+#'
+#' Lista representando dois conjuntos de pontos utilizados para teste
+#' list(espirais, happy)
+"spec_data"
+
 #' speclusteR: Spectral Clustering Algorithms in R
 #'
 #' Trabalho para disciplina Álgebra Linear para Data Science Machine Learning - 2018.2,
@@ -21,21 +27,15 @@ NULL
 #' A métrica utilizada é dada pela seguinte equação:
 #' \deqn{S(i, j) = ||x_i - x_j||^2 / 2 x sigma1 x sigma 2}
 #'
-#' @return A função retorna um numérico correspondendo a distância entre duas linhas da matriz.
-#' @param i Corresponde ao número que representa a i-ésima linha matriz
-#' @param j Corresponde ao número que representa a j-ésima linha matriz
-#' @param A matriz numérica que terá suas linhas comparadas
+#' @return A função retorna um numérico correspondendo a dois numéricos.
+#' @param xi Corresponde ao valor numérico
+#' @param xj Corresponde ao valor numperico
 #' @param sig corresponde a um real
 #' @param sig2 corresponde a um número real
 #' @export
 #' @examples
-#'mat <- matrix(sample(10,9), nrow = 3)
-#'print(mat)
-#'res <- apply_squared_exponential(1, 3, mat)
-#'print(res)
-apply_squared_exponential <- function(i, j, A, sig = 0.8, sig2 = 1){
-  xi <- A[i, ]
-  xj <- A[j, ]
+#' apply_squared_exponential(7, 9)
+apply_squared_exponential <- function(xi, xj, sig=0.8, sig2=1){
   norm_squared <- function(x, y) norm(as.matrix(x - y))^2
   exp( - norm_squared(xi, xj) / (2 * sig * sig2) )
 }
@@ -58,10 +58,15 @@ apply_squared_exponential <- function(i, j, A, sig = 0.8, sig2 = 1){
 #'
 build_similarity_graph <- function(A, sig1 = 0.8, sig2 = 1){
   n <- nrow(A)
-  stopifnot(n == ncol(A))
-  indices <- seq_len(n)
-  vectFunc <- Vectorize(apply_squared_exponential, vectorize.args = c('i','j'))
-  outer(indices, indices, FUN = vectFunc, A, sig1, sig2)
+  s <- matrix(NA, nrow = n, ncol = n)
+  for(i in 1:n) {
+    for(j in 1:n) {
+      xi <- A[i, ]
+      xj <- A[j, ]
+      s[i, j] <- apply_squared_exponential(xi, xj, sig1, sig2)
+    }
+  }
+  return(s)
 }
 
 

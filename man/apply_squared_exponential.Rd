@@ -4,21 +4,19 @@
 \alias{apply_squared_exponential}
 \title{apply_squared_exponential}
 \usage{
-apply_squared_exponential(i, j, A, sig = 0.8, sig2 = 1)
+apply_squared_exponential(xi, xj, sig = 0.8, sig2 = 1)
 }
 \arguments{
-\item{i}{Corresponde ao número que representa a i-ésima linha matriz}
+\item{xi}{Corresponde ao valor numérico}
 
-\item{j}{Corresponde ao número que representa a j-ésima linha matriz}
-
-\item{A}{matriz numérica que terá suas linhas comparadas}
+\item{xj}{Corresponde ao valor numperico}
 
 \item{sig}{corresponde a um real}
 
 \item{sig2}{corresponde a um número real}
 }
 \value{
-A função retorna um numérico correspondendo a distância entre duas linhas da matriz.
+A função retorna um numérico correspondendo a dois numéricos.
 }
 \description{
 Métrica de similaridade utilizada para construir o grafo de similaridade.
@@ -26,8 +24,5 @@ A métrica utilizada é dada pela seguinte equação:
 \deqn{S(i, j) = ||x_i - x_j||^2 / 2 x sigma1 x sigma 2}
 }
 \examples{
-mat <- matrix(sample(10,9), nrow = 3)
-print(mat)
-res <- apply_squared_exponential(1, 3, mat)
-print(res)
+apply_squared_exponential(7, 9)
 }
