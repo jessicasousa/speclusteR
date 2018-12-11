@@ -9,3 +9,5 @@ O pacote `speclusteR` foi criado utilizando o controle de versão do Github. Ent
 # install.packages("devtools")
 devtools::install_github("JessicaSousa/speclusteR")
 ```
+
+Mais exemplos em [exemplos](https://jessicasousa.github.io/speclusteR/doc/exemplos.html).
