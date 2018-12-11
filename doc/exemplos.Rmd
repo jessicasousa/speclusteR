@@ -1,0 +1,85 @@
+---
+title: "Exemplos"
+author: "Jessica Cardoso"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Um dos algoritmos de clustering mais populares é o algoritmo k-means, que particiona iterativamente n observações em k clusters. Mas nem sempre o k-means retorna bons resultados, ele não não lida bem com formas não convexas, como é o caso do exemplo abaixo.
+
+
+```{r}
+library(ggplot2)
+set.seed(2018)
+n <- 150
+r <- rnorm(n, 5, .25)
+theta <- runif(n, 0, 2 * pi)
+c1 <- data.frame(x = rnorm(n), y = rnorm(n))
+c2 <- data.frame(x = r * cos(theta), y = r * sin(theta))
+points <- rbind(c1, c2)
+km <- stats::kmeans(points, centers = 2)
+cluster <- factor(km$cluster)
+ggplot(points, aes(x = x, y = y, color = cluster)) +
+geom_point()
+```
+
+
+Apesar de existirem dois grupos visualmente distintos, o k-means não lida bem com a clusterização. O algoritmo dos spectral clustering podem ser encontrados neste [pdf](http://www.kyb.mpg.de/fileadmin/user_upload/files/publications/attachments/Luxburg07_tutorial_4488%5b0%5d.pdf).
+
+Para usar o speclusteR para resolver esse exemplo basta:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("JessicaSousa/speclusteR")
+```
+
+Para aplicar o spectral clustering basta utilizar a função `apply_spectral_clustering`, onde k é o número de clusters e type o tipo do algoritmo.
+
+- 1: Unnormalized spectral clustering
+- 2: Normalized spectral clustering according to Shi and Malik (2000)
+- 3: Normalized spectral clustering according to Ng, Jordan, and Weiss (2002)
+
+```{r}
+pointsm <- data.matrix(points)
+specc <- speclusteR::apply_spectral_clustering(pointsm, k = 2,  type = 3)
+cluster <- factor(specc$cluster)
+#plot
+ggplot(points, aes(x = x, y = y, color = cluster)) +
+geom_point()
+```
+
+
+Para outros exemplos, basta usar o `data(spec_data)` que contém uma lista contendo mais dois exemplos, abaixo há uma comparação entre kmeans aplicado diretamente sobre o dado e o resultado obtido com spectral.
+
+```{r, fig.align='center', fig.show='hold'}
+require(gridExtra)
+
+dados <- speclusteR::spec_data
+espirais <- dados[['espirais']]
+
+df <- as.data.frame(espirais)
+names(df) <- c('x','y')
+
+specc <- speclusteR::apply_spectral_clustering(espirais, k = 3,  type = 3)
+km <- stats::kmeans(df, centers = 3)
+cluster_spec <-  factor(specc$cluster)
+cluster_kmeans <- factor(km$cluster)
+#plot
+plot1 <- ggplot(df, aes(x = x, y = y, color = cluster_spec)) +
+         geom_point()
+plot2 <- ggplot(df, aes(x = x, y = y, color = cluster_kmeans)) +
+         geom_point()
+
+grid.arrange(plot1, plot2, nrow=2)
+```
