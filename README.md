@@ -1,7 +1,7 @@
 speclusteR: Spectral Clustering Algorithms in R
 ========================================
 
-O presente pacote permite que você realize o cálculo do spectral clusering implementado no R.
+Trabalho para disciplina Álgebra Linear para Data Science Machine Learning - 2018.2, implementação dos três principais Spectral Clustering Algorithms. Segundo [A Tutorial on Spectral Clustering](https://arxiv.org/pdf/0711.0189.pdf?fbclid=IwAR118imKMz2CW1yzQHAFaElmtU3vHoTSBUUlASwpK531DXLuYQ_j2Lvt9aU).
 
 O pacote `speclusteR` foi criado utilizando o controle de versão do Github. Então a instalação do pacote `speclusteR` pode ser realizado através do seguinte comando:
 
