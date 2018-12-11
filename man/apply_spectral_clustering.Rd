@@ -30,6 +30,7 @@ Retorna uma lista contendo o resultado do kmeans sobre o
 Essa função realiza o cálculo do spectral clustering de acordo com o tipo de normalização.
 }
 \examples{
+\dontrun{
 set.seed(2018)
 n <- 150
 r <- rnorm(n, 5, .25)
@@ -40,5 +41,5 @@ points1 <- rbind(c1, c2)
 A <- as.matrix(dist(points1))
 S <- build_similarity_graph(A)
 L <- create_graph_laplacian(S)
-
+}
 }

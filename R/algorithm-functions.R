@@ -131,6 +131,7 @@ create_graph_laplacian <- function(similarity_matrix, type = 1){
 #' }
 #' @export
 #' @examples
+#' \dontrun{
 #' set.seed(2018)
 #' n <- 150
 #' r <- rnorm(n, 5, .25)
@@ -141,7 +142,7 @@ create_graph_laplacian <- function(similarity_matrix, type = 1){
 #' A <- as.matrix(dist(points1))
 #' S <- build_similarity_graph(A)
 #' L <- create_graph_laplacian(S)
-#'
+#'}
 apply_spectral_clustering <- function(A, k, sig1 = 0.8, sig2 = 1, type = 1){
 
   if(!(type %in% 1:3)){
